@@ -45,10 +45,17 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance, 
 
 	//message pump
 	MSG msg;
-	while ( GetMessage( &msg, nullptr, 0, 0 ) > 0 ) {
+	BOOL gResult;
+	while ( (gResult = GetMessage( &msg, nullptr, 0, 0 )) > 0 ) {
 		TranslateMessage( &msg );
 		DispatchMessage( &msg );
 	}
 
-	return 0;
+	if ( gResult == -1 ) {
+		return -1;
+	}
+	else {
+		return msg.wParam;
+	}
+
 }
