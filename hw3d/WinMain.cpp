@@ -1,13 +1,24 @@
 #include <windows.h>
 
+LRESULT CALLBACK WinProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
+
+	switch ( msg ) {
+	case WM_CLOSE:
+		PostQuitMessage( 69 );
+		break;
+	}
+	return DefWindowProc( hWnd, msg, wParam, lParam );
+
+}
+
 int CALLBACK WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
 	
 	const auto pClassName = "hw3dbutts";
 	//register window class
 	WNDCLASSEX wc = { 0 };
-	wc.cbSize = sizeof(wc);
+	wc.cbSize = sizeof( wc );
 	wc.style = CS_OWNDC;
-	wc.lpfnWndProc = DefWindowProc;
+	wc.lpfnWndProc = WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
@@ -31,5 +42,13 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance, 
 	);
 	//show the window
 	ShowWindow(hWnd, SW_SHOW);
+
+	//message pump
+	MSG msg;
+	while ( GetMessage( &msg, nullptr, 0, 0 ) > 0 ) {
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
+	}
+
 	return 0;
 }
