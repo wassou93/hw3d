@@ -19,6 +19,17 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance, 
 	wc.hIcon = nullptr;
 	RegisterClassEx( &wc );
 	//create window instance
-
+	HWND hWnd = CreateWindowEx(
+		0,
+		pClassName,
+		"Happy Hard Window",
+		WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+		200, 200, 640, 480,
+		nullptr, nullptr,
+		hInstance,
+		nullptr
+	);
+	//show the window
+	ShowWindow(hWnd, SW_SHOW);
 	return 0;
 }
